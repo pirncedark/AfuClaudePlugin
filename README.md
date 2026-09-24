@@ -2,12 +2,13 @@
 
 **English** | [Türkçe](#türkçe)
 
-Two Claude Code skills, packaged so they can be dropped into any machine:
+Two Claude Code skills and a settings tool, packaged so they can be dropped into any machine:
 
-| Skill | What it gives you |
+| Part | What it gives you |
 |---|---|
 | **telegram-mod** | A two-way Telegram loop — run Claude Code from your phone. It asks its questions in Telegram and reads your answers from there. |
 | **afu-ai** | A CLI bridge — Claude routes a task to whichever CLI model fits (omp/Gemini, opencode, codex), verifies the result, and hands back one answer. |
+| **bypass_ayar** | Bypass permissions mode on/off — one command so Claude Code stops asking permission for every tool. See [Bypass permissions mode](#bypass-permissions-mode). |
 
 **No credentials in this repo.** Tokens and chat ids come from a gitignored `.env`;
 each CLI subagent uses its own login, so nothing is ever hardcoded.
@@ -142,12 +143,13 @@ scripts/bypass_ayar.py                bypass permissions on/off/status
 
 # Türkçe
 
-Herhangi bir bilgisayara taşınabilecek şekilde paketlenmiş iki Claude Code skill'i:
+Herhangi bir bilgisayara taşınabilecek şekilde paketlenmiş iki Claude Code skill'i ve bir ayar aracı:
 
-| Skill | Ne sağlar |
+| Parça | Ne sağlar |
 |---|---|
 | **telegram-mod** | Çift yönlü Telegram loop'u — Claude Code'u telefondan yürüt. Sorularını Telegram'dan sorar, cevabını oradan okur. |
 | **afu-ai** | CLI köprüsü — Claude işi uygun CLI modeline (omp/Gemini, opencode, codex) dağıtır, sonucu doğrular, sana tek cevap verir. |
+| **bypass_ayar** | Bypass (izin sormadan) modunu tek komutla açar/kapatır — Claude Code her araç için izin sormaz. Bkz. [Bypass (izin sormadan) modu](#bypass-izin-sormadan-modu). |
 
 **Bu repoda hiçbir API anahtarı yok.** Token ve chat id, git'e girmeyen `.env`
 dosyasından gelir; her CLI subagent kendi login'ini kullanır.
