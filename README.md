@@ -48,6 +48,29 @@ Everything lives in `.env` (see `.env.example`):
 
 `.env`, logs and `telegram_kuyruk/` are gitignored. Never commit real values.
 
+## Bypass permissions mode
+
+Claude Code's bypass mode starts sessions without asking permission for tools. When active, the status line shows `⏵⏵ bypass permissions on`.
+
+You can enable it in three ways:
+
+1. **Persistently:** `python scripts/bypass_ayar.py ac`. Use `python scripts/bypass_ayar.py kapat` to turn it off, or `python scripts/bypass_ayar.py durum` to inspect the settings.
+2. **For one session:** `claude --dangerously-skip-permissions`.
+3. **Inside a session:** press `Shift+Tab` to cycle modes. Bypass appears in the cycle when the session was started with bypass enabled.
+
+To configure `~/.claude/settings.json` manually, set both values:
+
+```json
+{
+  "permissions": {
+    "defaultMode": "bypassPermissions"
+  },
+  "skipDangerousModePermissionPrompt": true
+}
+```
+
+**Warning:** Claude will not ask before running any command. Do not enable this in a repository or on a machine you do not trust. Managed settings or the `disableBypassPermissionsMode` administrator policy can prevent it from working.
+
 ## telegram-mod — the Telegram loop
 
 Say "telegram mod" in Claude Code and it starts a ~2-minute cycle: read new
@@ -111,6 +134,7 @@ skills/afu-ai/SKILL.md                CLI routing + verification rules
 skills/afu-ai/scripts/omp_kanit.py    proof-banner wrapper for omp
 scripts/tg_dinleyici.py               Telegram long-poll listener
 scripts/tg_gonder.py                  Bot API sender (HTML, photo/video/document)
+scripts/bypass_ayar.py                bypass permissions on/off/status
 .env.example                          configuration template
 ```
 
@@ -158,6 +182,29 @@ Her şey `.env` içinde (`.env.example`'a bak):
 | `MCP_TELEGRAM_CHAT_ID` | `@userinfobot`'a mesaj at → id'ni yazar |
 
 `.env`, log'lar ve `telegram_kuyruk/` git'e girmez. Gerçek değerleri asla commit'leme.
+
+## Bypass (izin sormadan) modu
+
+Bypass modu, Claude Code oturumlarının araçlar için izin istemeden başlamasını sağlar. Etkin olduğunda durum satırında `⏵⏵ bypass permissions on` görünür.
+
+Üç şekilde açabilirsiniz:
+
+1. **Kalıcı:** `python scripts/bypass_ayar.py ac`. Kapatmak için `python scripts/bypass_ayar.py kapat`, ayarları görmek için `python scripts/bypass_ayar.py durum` kullanın.
+2. **Tek oturumluk:** `claude --dangerously-skip-permissions`.
+3. **Oturum içinden:** modlar arasında geçmek için `Shift+Tab` tuşlarına basın. Bypass, oturum bypass açık başlatıldıysa döngüde görünür.
+
+`~/.claude/settings.json` dosyasını elle düzenlemek için şu iki değeri ayarlayın:
+
+```json
+{
+  "permissions": {
+    "defaultMode": "bypassPermissions"
+  },
+  "skipDangerousModePermissionPrompt": true
+}
+```
+
+**Uyarı:** Claude hiçbir komutu çalıştırmadan önce sormaz. Güvenmediğiniz bir repoda veya makinede açmayın. Yönetilen ayarlar ya da `disableBypassPermissionsMode` yönetici politikası bu modu engelleyebilir.
 
 ## telegram-mod — Telegram loop'u
 
@@ -222,5 +269,6 @@ skills/afu-ai/SKILL.md                CLI yönlendirme + doğrulama kuralları
 skills/afu-ai/scripts/omp_kanit.py    omp için kanıt-banner sarmalayıcısı
 scripts/tg_dinleyici.py               Telegram long-poll dinleyicisi
 scripts/tg_gonder.py                  Bot API göndericisi (HTML, foto/video/dosya)
+scripts/bypass_ayar.py                bypass modunu ac/kapat/durum
 .env.example                          ayar şablonu
 ```
