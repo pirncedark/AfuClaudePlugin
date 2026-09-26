@@ -117,6 +117,43 @@ except Exception:
     nobet = ""
 
 ajanlar = ""
+kabuk_sayisi = 0
+try:
+    import os, sqlite3
+    from pathlib import Path
+    depo = os.environ.get("AFUNOBET_DIR") or os.path.join(os.path.expanduser("~"), "Desktop", "afuproject", "AfuNobet")
+    db_path = os.path.join(depo, "state.db")
+    conn = sqlite3.connect("file:" + db_path.replace("\\", "/") + "?mode=ro", uri=True, timeout=0.2)
+    shell_rows = conn.execute("SELECT pid FROM shells WHERE status = ?", ("RUNNING",)).fetchall()
+    conn.close()
+    if os.name == "nt":
+        import ctypes
+        kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+        kernel32.OpenProcess.argtypes = [ctypes.c_uint32, ctypes.c_int, ctypes.c_uint32]
+        kernel32.OpenProcess.restype = ctypes.c_void_p
+        kernel32.WaitForSingleObject.argtypes = [ctypes.c_void_p, ctypes.c_uint32]
+        kernel32.WaitForSingleObject.restype = ctypes.c_uint32
+        kernel32.CloseHandle.argtypes = [ctypes.c_void_p]
+        kernel32.CloseHandle.restype = ctypes.c_int
+        for (pid,) in shell_rows:
+            handle = kernel32.OpenProcess(0x00100000 | 0x1000, 0, int(pid))
+            if handle:
+                try:
+                    if kernel32.WaitForSingleObject(handle, 0) == 0x102:
+                        kabuk_sayisi += 1
+                finally:
+                    kernel32.CloseHandle(handle)
+    else:
+        for (pid,) in shell_rows:
+            try:
+                os.kill(int(pid), 0)
+                kabuk_sayisi += 1
+            except PermissionError:
+                kabuk_sayisi += 1
+            except (ProcessLookupError, ValueError, TypeError):
+                pass
+except Exception:
+    pass
 try:
     import glob, time
     ajan_dir = os.path.join(os.path.expanduser("~"), ".claude", "afu-ajanlar")
@@ -192,6 +229,11 @@ try:
         ajanlar += " \u00b7 " + token_part
 except Exception:
     ajanlar = ""
+
+if kabuk_sayisi > 0:
+    if not ajanlar:
+        ajanlar = "0 calisiyor"
+    ajanlar += " · " + str(kabuk_sayisi) + " kabuk"
 
 fields = [
     num(cw.get("used_percentage")),

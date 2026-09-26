@@ -102,6 +102,10 @@ class JSONLParser:
             if self.agent == "opencode" and b"Free usage exceeded" in line:
                 self.plain_opencode_quota = True
             return
+        if not isinstance(event, dict):
+            return
+        if not isinstance(event, dict):
+            return
         self.event_count += 1
         if self.agent == "codex":
             self._codex(event)
@@ -210,6 +214,9 @@ class JSONLParser:
                 event = json.loads(raw.decode("utf-8"))
             except (UnicodeDecodeError, json.JSONDecodeError):
                 continue
+            # Rollout JSONL wraps protocol events in an event_msg payload.
+            if event.get("type") == "event_msg":
+                event = event.get("payload") or {}
             if event.get("type") == "token_count":
                 last = ((event.get("info") or {}).get("total_token_usage") or {}).get("total_tokens")
         if last is not None:

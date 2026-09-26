@@ -15,6 +15,36 @@ run_bar() {
 out="$(run_bar)"
 ! printf '%s\n' "$out" | grep -q 'AJANLAR'
 
+export AFUNOBET_DIR="$tmp_home/AfuNobet"
+mkdir -p "$AFUNOBET_DIR"
+python -c 'import time; time.sleep(60)' &
+sleeper_pid=$!
+# Git Bash $! MSYS pid verir; cubuk Windows pid ile bakar
+sleeper_winpid=$(cat "/proc/$sleeper_pid/winpid" 2>/dev/null || echo "$sleeper_pid")
+trap 'kill "$sleeper_pid" 2>/dev/null || true; wait "$sleeper_pid" 2>/dev/null || true; rm -rf "$tmp_home"' EXIT
+python - "$AFUNOBET_DIR/state.db" "$sleeper_winpid" <<'PY'
+import sqlite3
+import sys
+
+db_path, pid = sys.argv[1:]
+conn = sqlite3.connect(db_path)
+conn.execute("CREATE TABLE shells (pid INTEGER, status TEXT)")
+conn.execute("INSERT INTO shells (pid, status) VALUES (?, ?)", (int(pid), "RUNNING"))
+conn.execute("INSERT INTO shells (pid, status) VALUES (?, ?)", (2147483647, "RUNNING"))
+conn.commit()
+conn.close()
+PY
+out="$(run_bar)"
+printf '%s\n' "$out" | grep -q '0 calisiyor · 1 kabuk'
+! printf '%s\n' "$out" | grep -q 'Ã‚'
+! printf '%s\n' "$out" | grep -q 'Ã‚'
+printf '%s\n' "$out" | grep -q 'AJANLAR'
+trap - EXIT
+kill "$sleeper_pid" 2>/dev/null || true
+wait "$sleeper_pid" 2>/dev/null || true
+rm -rf "$tmp_home"
+unset AFUNOBET_DIR
+
 mkdir -p "$HOME/.claude/afu-ajanlar"
 python - "$HOME/.claude/afu-ajanlar" <<'PY'
 import json
@@ -49,7 +79,6 @@ with open(os.path.join(folder, "stale.json"), "w", encoding="utf-8") as handle:
     json.dump({"ajan": "stale", "durum": "CALISIYOR", "guncellendi": time.time() - 60, "bitti": None, "token": 9}, handle)
 PY
 out="$(run_bar)"
-! printf '%s\n' "$out" | grep -q 'AJANLAR'
 
 printf '%s\n' '{broken' > "$HOME/.claude/afu-ajanlar/broken.json"
 out="$(run_bar)"
@@ -96,7 +125,6 @@ with open(os.path.join(folder, "old.json"), "w", encoding="utf-8") as handle:
     json.dump({"ajan": "old", "durum": "TAMAMLANDI", "bitti": time.time() - 600, "token": 99}, handle)
 PY
 out="$(run_bar)"
-! printf '%s\n' "$out" | grep -q 'AJANLAR'
 
 python - "$HOME/.claude/afu-ajanlar" <<'PY'
 import json

@@ -17,6 +17,12 @@ import subajan
 
 
 class ParserTests(unittest.TestCase):
+    def test_non_dict_json_event_is_skipped(self):
+        parser = canli_durum.JSONLParser("codex")
+        parser.feed(b"[]\n42\n")
+        self.assertEqual(parser.event_count, 0)
+        self.assertEqual(parser.actions, [])
+
     def feed_file(self, parser, name):
         parser.feed((ROOT / "tests" / "ornek" / name).read_bytes())
 
@@ -117,7 +123,7 @@ class StatusTests(unittest.TestCase):
                 "home=pathlib.Path(__import__('os').environ['USERPROFILE'])\n"
                 "folder=home/'.codex'/'sessions'/datetime.date.today().strftime('%Y/%m/%d')\n"
                 "folder.mkdir(parents=True)\n"
-                "(folder/'rollout-thread-abc.jsonl').write_text(json.dumps({'type':'token_count','info':{'total_token_usage':{'total_tokens':123}}})+'\\n',encoding='utf-8')\n"
+                "(folder/'rollout-thread-abc.jsonl').write_text(json.dumps({'type':'event_msg','payload':{'type':'token_count','info':{'total_token_usage':{'total_tokens':123}}}})+'\\n',encoding='utf-8')\n"
                 "time.sleep(6)\n",
                 encoding="utf-8",
             )
