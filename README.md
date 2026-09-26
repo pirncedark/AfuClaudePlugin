@@ -152,12 +152,24 @@ Install: copy `statusline/statusline-command.sh` and `statusline/ajan_token.sh` 
 
 Test: `bash statusline/test_cubuk_ajanlar.sh`
 
+
+### Live agents
+
+`subajan.py` writes agent status files under `~/.claude/afu-ajanlar/`. The status bar reads them into its `AJANLAR` row. For a live view in the terminal, run `afunobet monitor --canli`.
+
+### Agent wrappers
+
+The `agents/` folder contains Claude Code wrappers; copy its `*.md` files to `~/.claude/agents/`. Calling `Agent(subagent_type=codex)` makes Codex runs appear in Claude Code's agent list. The wrapper's listed token is the Haiku waiter; actual usage tokens are reported in `AJANLAR`. `subajan.py` supports `--ham` (raw output), `--sozlesme` (contract output), and `--worktree` (isolated worktree).
+
 ## Layout
 
 ```
 skills/telegram-mod/SKILL.md          two-way Telegram loop
 skills/afu-ai/SKILL.md                CLI routing + verification rules
 skills/afu-ai/scripts/omp_kanit.py    proof-banner wrapper for omp
+skills/afu-ai/scripts/subajan.py      CLI subagent runner + live status
+skills/afu-ai/scripts/canli_durum.py  live agent status reader
+agents/                               Claude Code CLI wrappers
 scripts/tg_dinleyici.py               Telegram long-poll listener
 scripts/tg_gonder.py                  Bot API sender (HTML, photo/video/document)
 scripts/bypass_ayar.py                bypass permissions on/off/status
@@ -297,12 +309,23 @@ Banner kırmızıya dönerse dur: iş ücretli bir modele düşmüş demektir.
 **NOBET** satırı AfuNobet gözetmeninden gelir (`AFUNOBET_DIR`, varsayılan `~/Desktop/afuproject/AfuNobet`); yoksa atlanır.
 Yenilemede ek süreç açılmaz; hata çubuğu bozmaz. Kurulum ve test için İngilizce bölüme bak.
 
+### Canlı ajanlar
+
+`subajan.py`, ajan durum dosyalarını `~/.claude/afu-ajanlar/` altına yazar; durum çubuğu bunları `AJANLAR` satırında gösterir. Terminalde canlı izlemek için `afunobet monitor --canli` çalıştırın.
+
+### Ajan sarmalayıcıları
+
+`agents/` klasöründeki Claude Code sarmalayıcılarını `~/.claude/agents/` altına kopyalayın. `Agent(subagent_type=codex)` çağrısı Codex çalışmalarını Claude Code ajan listesinde gösterir. Listelenen token Haiku bekleyicisine aittir; gerçek kullanım tokenları `AJANLAR` satırındadır. `subajan.py`, `--ham` (ham çıktı), `--sozlesme` (sözleşme çıktısı) ve `--worktree` (ayrı worktree) seçeneklerini destekler.
+
 ## Dosya düzeni
 
 ```
 skills/telegram-mod/SKILL.md          çift yönlü Telegram loop
 skills/afu-ai/SKILL.md                CLI yönlendirme + doğrulama kuralları
 skills/afu-ai/scripts/omp_kanit.py    omp için kanıt-banner sarmalayıcısı
+skills/afu-ai/scripts/subajan.py      CLI ajan çalıştırıcısı + canlı durum
+skills/afu-ai/scripts/canli_durum.py  canlı ajan durum okuyucusu
+agents/                               Claude Code CLI sarmalayıcıları
 scripts/tg_dinleyici.py               Telegram long-poll dinleyicisi
 scripts/tg_gonder.py                  Bot API göndericisi (HTML, foto/video/dosya)
 scripts/bypass_ayar.py                bypass modunu ac/kapat/durum
