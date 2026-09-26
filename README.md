@@ -127,6 +127,31 @@ python skills/afu-ai/scripts/omp_kanit.py "<task>" --cwd "<dir>" --timeout 600
 
 If the banner turns red, stop: the request fell through to a paid model.
 
+## Status line — models, quotas and live agents
+
+`statusline/` is the multi-line Claude Code status bar used with afu-ai:
+
+```
+MODEL    Opus 5.5        │  high │ fast off · thinking on
+NOBET    gpt-6-luna   $0 │   med │ CODEX · fast off · job <id>
+AJANLAR  2 calisiyor · 1 bitti · codex, opencode · ↓ 79.8k
+CLAUDE / OPENCODE / GEMINI / CODEX   quota bars + tokens + reset time
+Bağlam   context bar · $ spent · 5H / 7D windows
+```
+
+- **AJANLAR** reads the live status files that `afu-ai/scripts/subajan.py` writes to `~/.claude/afu-ajanlar/`.
+  Running agents plus the ones that finished in the last 5 minutes; `(1 sorunlu)` when one ended in quota/error.
+- **NOBET** comes from the AfuNobet supervisor if present (`AFUNOBET_DIR`, default `~/Desktop/afuproject/AfuNobet`); otherwise it is skipped.
+- No extra process is started on refresh; errors never break the bar.
+
+Install: copy `statusline/statusline-command.sh` and `statusline/ajan_token.sh` to `~/.claude/`, then in `~/.claude/settings.json`:
+
+```json
+"statusLine": { "type": "command", "command": "bash ~/.claude/statusline-command.sh" }
+```
+
+Test: `bash statusline/test_cubuk_ajanlar.sh`
+
 ## Layout
 
 ```
@@ -137,6 +162,7 @@ scripts/tg_dinleyici.py               Telegram long-poll listener
 scripts/tg_gonder.py                  Bot API sender (HTML, photo/video/document)
 scripts/bypass_ayar.py                bypass permissions on/off/status
 .env.example                          configuration template
+statusline/                           status bar (models, quotas, live agents)
 ```
 
 ---
@@ -262,6 +288,14 @@ python skills/afu-ai/scripts/omp_kanit.py "<görev>" --cwd "<dizin>" --timeout 6
 ```
 
 Banner kırmızıya dönerse dur: iş ücretli bir modele düşmüş demektir.
+
+## Durum çubuğu — modeller, kotalar ve canlı ajanlar
+
+`statusline/` afu-ai ile kullanılan çok satırlı Claude Code durum çubuğu.
+**AJANLAR** satırı `subajan.py`'nin `~/.claude/afu-ajanlar/` klasörüne yazdığı canlı durum dosyalarını okur:
+çalışan ajanlar ve son 5 dakikada bitenler; kota/hata ile biten varsa `(1 sorunlu)`.
+**NOBET** satırı AfuNobet gözetmeninden gelir (`AFUNOBET_DIR`, varsayılan `~/Desktop/afuproject/AfuNobet`); yoksa atlanır.
+Yenilemede ek süreç açılmaz; hata çubuğu bozmaz. Kurulum ve test için İngilizce bölüme bak.
 
 ## Dosya düzeni
 
