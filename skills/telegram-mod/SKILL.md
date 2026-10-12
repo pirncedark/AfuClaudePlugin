@@ -58,12 +58,17 @@ python scripts/tg_gonder.py "<b>Is bitti</b>
 python scripts/tg_gonder.py "yeni gorsel" --photo cikti/banner.png
 ```
 
-**Telegram HTML'de SADECE sunlar calisir:** `<b> <i> <u> <s> <code> <pre>
-<a href> <blockquote> <tg-spoiler>`.
-⛔ `<table> <ul> <li> <br> <h1..h6> <div>` YOK — tablo yerine `•` satirlari,
-baslik yerine `<b>`, satir sonu yerine gercek yeni satir kullan.
+**Telegram HTML'de SADECE `<b>`, `<i>` ve `<code>` etiketlerini kullan.**
+Markdown (`#`, `**`, `-`, tablo), kod blogu, ic ice liste ve alt madde kullanma.
 ⛔ Metindeki serbest `&`, `<`, `>` karakterlerini kacir (`&amp; &lt; &gt;`) yoksa
 400 doner. 4096 karakteri asan mesaji script kendisi parcalar.
+
+### Kalici rapor bicimi
+- Sade, gunluk Turkce kullan; urun adlari disinda yabanci terim kullanma.
+- Once `━` ayirici satiri, sonra tek bir kalin baslik, sonra bir `━` ayirici satiri yaz.
+- Devaminda numarali maddeler kullan; sayilari `1`, `2`... seklinde yaz (kutulu emoji kullanma). En fazla 8 madde; her madde tek kisa satir olsun.
+- Kullanici yaniti gerekiyorsa son satir `❓` ile baslasin ve secenekleri `1 = ... / 2 = ...` seklinde versin.
+- Ham gunluk, dosya icerigi veya arac ciktisini mesaja yapistirma.
 
 Duz/kisa mesajda MCP `SEND_MESSAGE` yeterli.
 
