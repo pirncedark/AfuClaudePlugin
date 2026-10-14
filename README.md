@@ -8,6 +8,7 @@ Two Claude Code skills and a settings tool, packaged so they can be dropped into
 |---|---|
 | **telegram-mod** | A two-way Telegram loop — run Claude Code from your phone. It asks its questions in Telegram and reads your answers from there. |
 | **afu-ai** | A CLI bridge — Claude routes a task to whichever CLI model fits (omp/Gemini, opencode, codex), verifies the result, and hands back one answer. |
+| **router** | Agent router hook — type `ajan codex` / `ajan gemini` / `ajan opencode` / `ajan claude` and every following prompt goes to that agent; on a quota error it falls over to the next one. See [router/README.md](router/README.md). |
 | **bypass_ayar** | Bypass permissions mode on/off — one command so Claude Code stops asking permission for every tool. See [Bypass permissions mode](#bypass-permissions-mode). |
 
 **No credentials in this repo.** Tokens and chat ids come from a gitignored `.env`;
@@ -187,6 +188,7 @@ Herhangi bir bilgisayara taşınabilecek şekilde paketlenmiş iki Claude Code s
 |---|---|
 | **telegram-mod** | Çift yönlü Telegram loop'u — Claude Code'u telefondan yürüt. Sorularını Telegram'dan sorar, cevabını oradan okur. |
 | **afu-ai** | CLI köprüsü — Claude işi uygun CLI modeline (omp/Gemini, opencode, codex) dağıtır, sonucu doğrular, sana tek cevap verir. |
+| **router** | Ajan yönlendirici hook — `ajan codex` / `ajan gemini` / `ajan opencode` / `ajan claude` yaz, sonraki mesajlar o ajana gider; kota dolunca sıradakine geçer. Bkz. [router/README.md](router/README.md). |
 | **bypass_ayar** | Bypass (izin sormadan) modunu tek komutla açar/kapatır — Claude Code her araç için izin sormaz. Bkz. [Bypass (izin sormadan) modu](#bypass-izin-sormadan-modu). |
 
 **Bu repoda hiçbir API anahtarı yok.** Token ve chat id, git'e girmeyen `.env`
