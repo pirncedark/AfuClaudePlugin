@@ -4,3 +4,7 @@ __pycache__/
 *.pyc
 *.bak
 telegram_kuyruk/
+router/isler/
+router/oturumlar/
+router/kayit.log
+router/aktif_ajan.txt
