@@ -16,6 +16,8 @@ each CLI subagent uses its own login, so nothing is ever hardcoded.
 
 ## Quick install (Claude Code and Codex)
 
+> **Give this to your Claude/Codex:** paste the link to [KURULUM_CLAUDE.md](KURULUM_CLAUDE.md) and say "install this" — it contains step-by-step agent instructions (asks what you have, installs, verifies, tells you which steps need you).
+
 One command copies all skills to `~/.claude/skills` (Claude Code) and `~/.agents/skills` (Codex):
 
 ```powershell
