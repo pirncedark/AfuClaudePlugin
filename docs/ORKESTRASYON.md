@@ -58,3 +58,32 @@ Koordinatöre normal konuş: *"README'ye kurulum bölümü ekle."* Koordinatör:
 - `.env`, token, şifre asla commit edilmez (`.gitignore` kapsar).
 - `bypass_ayar.py ac` yalnız güvendiğin makinede ve depoda.
 - Canlı sunucuya yükleme ve `main`'e merge her zaman senin onayınla.
+
+## 8. Gemini kullananlar için
+- `afu-ai` Gemini'yi `omp` üzerinden çağırır: flash = hızlı tarama/özet, pro = derin inceleme. Kurulum: `omp` kur, Google hesabıyla giriş yap, `omp --version` ile doğrula.
+- Sadece Gemini'n varsa Codex'siz de çalışır: `skills/afu-ai/SKILL.md` içindeki tabloda Codex satırını kullanma, kod işlerini de Gemini'ye ver.
+- Gemini kotası bitince OpenCode ya da Codex'e düş; `zaman-asimi-zinciri` skill'i kesilen işi aynı oturumdan devam ettirir.
+
+## 9. Durum çubuğu paneli
+Çubuk ayrı depoda: [afu-claude-statusline](https://github.com/pirncedark/afu-claude-statusline) (kota çubukları, bağlam, alt ajan paneli). Kurulum o deponun README'sinde. `afu-ai` canlı ajan durumunu `~/.claude/afu-ajanlar/` altına yazar, çubuk oradan okur.
+
+## 10. Skill listesi
+| Skill | Ne işe yarar |
+|---|---|
+| `isci-terminal` | Koordinatör + işçi terminal düzeni |
+| `afu-ai` | Görevi Gemini/Codex/OpenCode'dan uygun olana yaptırır, doğrular |
+| `ajan-kopru` | opencode ve codex'i alt ajan olarak çalıştırma, tuzakların çözümü |
+| `zaman-asimi-zinciri` | Zaman aşımına uğrayan işi kaldığı yerden sürdürür |
+| `isaretle-devret` | Hata yerini 📍 ile işaretleyip ajana devretme |
+| `kendin-yap` | Araçla yapılabilen adımı kullanıcıya bırakma |
+| `ana-terminal-koordinatoru` | Bilgisayarı kapatmadan önce açık işleri toplayıp push eder |
+| `github-push-zinciri` | Depoya push/PR/release düzeni kurma |
+| `telegram-mod` | Telefondan iki yönlü yönetim (AFK) |
+| `kesif` | İşe başlamadan önce hazır repo/çözüm araştırma |
+| `crawl4ai-tara` | Siteyi ücretsiz tarayıp markdown'a çevirme |
+| `pencere-firtinasi` | Windows'ta boş terminal pencereleri birikmesini teşhis |
+| `responsive-denetim`, `site-hiz-olcum`, `seo-indeks-tuzaklari` | Web sitesi kontrolleri |
+
+## 11. Arkadaşa gönderilecek mesaj
+> Claude Code + Codex/Gemini orkestrasyon kiti: https://github.com/pirncedark/AfuClaudePlugin
+> 1) Klonla, `install.ps1` (Windows) ya da `./install.sh` çalıştır. 2) `docs/ORKESTRASYON.md` dosyasını sırayla oku: iki terminal aç, birini `/rename işçi` yap. 3) Gemini için `omp` kur ve giriş yap. 4) Durum çubuğu için `afu-claude-statusline` deposunu kur. Telegram ve `.env` isteğe bağlı; kendi token'ını yaz, benimkini isteme.

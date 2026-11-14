@@ -25,6 +25,8 @@ git clone https://github.com/pirncedark/AfuClaudePlugin.git; cd AfuClaudePlugin;
 git clone https://github.com/pirncedark/AfuClaudePlugin.git && cd AfuClaudePlugin && ./install.sh        # or: ./install.sh codex
 ```
 
+Skills included: `isci-terminal`, `afu-ai`, `ajan-kopru`, `zaman-asimi-zinciri`, `isaretle-devret`, `kendin-yap`, `ana-terminal-koordinatoru`, `github-push-zinciri`, `telegram-mod`, `kesif`, `crawl4ai-tara`, `pencere-firtinasi`, `responsive-denetim`, `site-hiz-olcum`, `seo-indeks-tuzaklari` (full table in the guide). Gemini users and the status bar: see sections 8-9 of the guide.
+
 Re-run it after `git pull` to update. Then follow [docs/ORKESTRASYON.md](docs/ORKESTRASYON.md).
 
 ## Install
