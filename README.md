@@ -28,12 +28,14 @@ Link the skills into Claude Code (`~/.claude/skills/`):
 # Linux / macOS
 ln -s "$PWD/skills/telegram-mod" ~/.claude/skills/telegram-mod
 ln -s "$PWD/skills/afu-ai"       ~/.claude/skills/afu-ai
+ln -s "$PWD/skills/isci-terminal" ~/.claude/skills/isci-terminal
 ```
 
 ```powershell
 # Windows (admin, or Developer Mode on)
 New-Item -ItemType SymbolicLink -Path "$HOME\.claude\skills\telegram-mod" -Target "$PWD\skills\telegram-mod"
 New-Item -ItemType SymbolicLink -Path "$HOME\.claude\skills\afu-ai"       -Target "$PWD\skills\afu-ai"
+New-Item -ItemType SymbolicLink -Path "$HOME\.claude\skills\isci-terminal" -Target "$PWD\skills\isci-terminal"
 ```
 
 Copying the folders instead of symlinking works too — you just have to re-copy after updates.
@@ -127,6 +129,10 @@ python skills/afu-ai/scripts/omp_kanit.py "<task>" --cwd "<dir>" --timeout 600
 
 If the banner turns red, stop: the request fell through to a paid model.
 
+## isci-terminal — coordinator + worker terminals
+
+Two Claude Code sessions: a **coordinator** (Opus) that plans, answers questions and verifies, and a **worker** session named `işçi` that writes code with Codex (and calls Gemini/OpenCode). The coordinator sends each task to the worker with `SendMessage`, answers the worker's questions itself, checks the result, sends it back **once** if it is incomplete (then does it itself), and treats work as done only after commit + push. Combine with `telegram-mod` (AFK) to run it from your phone. Step-by-step setup and first run: [docs/ORKESTRASYON.md](docs/ORKESTRASYON.md).
+
 ## Status line — models, quotas and live agents
 
 `statusline/` is the multi-line Claude Code status bar used with afu-ai:
@@ -165,6 +171,7 @@ The `agents/` folder contains Claude Code wrappers; copy its `*.md` files to `~/
 
 ```
 skills/telegram-mod/SKILL.md          two-way Telegram loop
+skills/isci-terminal/SKILL.md         coordinator + worker terminal rules
 skills/afu-ai/SKILL.md                CLI routing + verification rules
 skills/afu-ai/scripts/omp_kanit.py    proof-banner wrapper for omp
 skills/afu-ai/scripts/subajan.py      CLI subagent runner + live status
@@ -207,6 +214,7 @@ Skill'leri Claude Code'a bağla (`~/.claude/skills/`):
 # Windows (yönetici, ya da Geliştirici Modu açık)
 New-Item -ItemType SymbolicLink -Path "$HOME\.claude\skills\telegram-mod" -Target "$PWD\skills\telegram-mod"
 New-Item -ItemType SymbolicLink -Path "$HOME\.claude\skills\afu-ai"       -Target "$PWD\skills\afu-ai"
+New-Item -ItemType SymbolicLink -Path "$HOME\.claude\skills\isci-terminal" -Target "$PWD\skills\isci-terminal"
 ```
 
 Sembolik bağ yerine klasörleri kopyalamak da olur — güncellemeden sonra tekrar
@@ -301,6 +309,10 @@ python skills/afu-ai/scripts/omp_kanit.py "<görev>" --cwd "<dizin>" --timeout 6
 
 Banner kırmızıya dönerse dur: iş ücretli bir modele düşmüş demektir.
 
+## isci-terminal — koordinatör + işçi terminal
+
+İki Claude Code oturumu: planlayan, soruları cevaplayan ve doğrulayan **koordinatör** (Opus) ile Codex'le kod yazan (Gemini/OpenCode'u çağıran) `işçi` adlı **işçi** oturumu. Koordinatör her görevi `SendMessage` ile işçiye yollar, işçinin sorularını kendisi cevaplar, sonucu doğrular, eksikse **bir kez** geri yollar (yine olmazsa kendisi yapar) ve commit + push olmadan işi bitmiş saymaz. Telefondan yönetmek için `telegram-mod` (AFK) ile birlikte kullanılır. Adım adım kurulum ve ilk çalıştırma: [docs/ORKESTRASYON.md](docs/ORKESTRASYON.md).
+
 ## Durum çubuğu — modeller, kotalar ve canlı ajanlar
 
 `statusline/` afu-ai ile kullanılan çok satırlı Claude Code durum çubuğu.
@@ -321,6 +333,7 @@ Yenilemede ek süreç açılmaz; hata çubuğu bozmaz. Kurulum ve test için İn
 
 ```
 skills/telegram-mod/SKILL.md          çift yönlü Telegram loop
+skills/isci-terminal/SKILL.md         koordinatör + işçi terminal kuralları
 skills/afu-ai/SKILL.md                CLI yönlendirme + doğrulama kuralları
 skills/afu-ai/scripts/omp_kanit.py    omp için kanıt-banner sarmalayıcısı
 skills/afu-ai/scripts/subajan.py      CLI ajan çalıştırıcısı + canlı durum
