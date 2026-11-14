@@ -14,6 +14,19 @@ Two Claude Code skills and a settings tool, packaged so they can be dropped into
 **No credentials in this repo.** Tokens and chat ids come from a gitignored `.env`;
 each CLI subagent uses its own login, so nothing is ever hardcoded.
 
+## Quick install (Claude Code and Codex)
+
+One command copies all skills to `~/.claude/skills` (Claude Code) and `~/.agents/skills` (Codex):
+
+```powershell
+git clone https://github.com/pirncedark/AfuClaudePlugin.git; cd AfuClaudePlugin; .\install.ps1          # or: .\install.ps1 -Target codex
+```
+```bash
+git clone https://github.com/pirncedark/AfuClaudePlugin.git && cd AfuClaudePlugin && ./install.sh        # or: ./install.sh codex
+```
+
+Re-run it after `git pull` to update. Then follow [docs/ORKESTRASYON.md](docs/ORKESTRASYON.md).
+
 ## Install
 
 ```bash
@@ -29,12 +42,14 @@ Link the skills into Claude Code (`~/.claude/skills/`):
 # Linux / macOS
 ln -s "$PWD/skills/telegram-mod" ~/.claude/skills/telegram-mod
 ln -s "$PWD/skills/afu-ai"       ~/.claude/skills/afu-ai
+ln -s "$PWD/skills/isci-terminal" ~/.claude/skills/isci-terminal
 ```
 
 ```powershell
 # Windows (admin, or Developer Mode on)
 New-Item -ItemType SymbolicLink -Path "$HOME\.claude\skills\telegram-mod" -Target "$PWD\skills\telegram-mod"
 New-Item -ItemType SymbolicLink -Path "$HOME\.claude\skills\afu-ai"       -Target "$PWD\skills\afu-ai"
+New-Item -ItemType SymbolicLink -Path "$HOME\.claude\skills\isci-terminal" -Target "$PWD\skills\isci-terminal"
 ```
 
 Copying the folders instead of symlinking works too — you just have to re-copy after updates.
@@ -128,6 +143,10 @@ python skills/afu-ai/scripts/omp_kanit.py "<task>" --cwd "<dir>" --timeout 600
 
 If the banner turns red, stop: the request fell through to a paid model.
 
+## isci-terminal — coordinator + worker terminals
+
+Two Claude Code sessions: a **coordinator** (Opus) that plans, answers questions and verifies, and a **worker** session named `işçi` that writes code with Codex (and calls Gemini/OpenCode). The coordinator sends each task to the worker with `SendMessage`, answers the worker's questions itself, checks the result, sends it back **once** if it is incomplete (then does it itself), and treats work as done only after commit + push. Combine with `telegram-mod` (AFK) to run it from your phone. Step-by-step setup and first run: [docs/ORKESTRASYON.md](docs/ORKESTRASYON.md).
+
 ## Status line
 
 The status bar now lives in its own repo: [afu-claude-statusline](https://github.com/pirncedark/afu-claude-statusline).
@@ -144,6 +163,7 @@ The `agents/` folder contains Claude Code wrappers; copy its `*.md` files to `~/
 
 ```
 skills/telegram-mod/SKILL.md          two-way Telegram loop
+skills/isci-terminal/SKILL.md         coordinator + worker terminal rules
 skills/afu-ai/SKILL.md                CLI routing + verification rules
 skills/afu-ai/scripts/omp_kanit.py    proof-banner wrapper for omp
 skills/afu-ai/scripts/subajan.py      CLI subagent runner + live status
@@ -186,6 +206,7 @@ Skill'leri Claude Code'a bağla (`~/.claude/skills/`):
 # Windows (yönetici, ya da Geliştirici Modu açık)
 New-Item -ItemType SymbolicLink -Path "$HOME\.claude\skills\telegram-mod" -Target "$PWD\skills\telegram-mod"
 New-Item -ItemType SymbolicLink -Path "$HOME\.claude\skills\afu-ai"       -Target "$PWD\skills\afu-ai"
+New-Item -ItemType SymbolicLink -Path "$HOME\.claude\skills\isci-terminal" -Target "$PWD\skills\isci-terminal"
 ```
 
 Sembolik bağ yerine klasörleri kopyalamak da olur — güncellemeden sonra tekrar
@@ -280,6 +301,10 @@ python skills/afu-ai/scripts/omp_kanit.py "<görev>" --cwd "<dizin>" --timeout 6
 
 Banner kırmızıya dönerse dur: iş ücretli bir modele düşmüş demektir.
 
+## isci-terminal — koordinatör + işçi terminal
+
+İki Claude Code oturumu: planlayan, soruları cevaplayan ve doğrulayan **koordinatör** (Opus) ile Codex'le kod yazan (Gemini/OpenCode'u çağıran) `işçi` adlı **işçi** oturumu. Koordinatör her görevi `SendMessage` ile işçiye yollar, işçinin sorularını kendisi cevaplar, sonucu doğrular, eksikse **bir kez** geri yollar (yine olmazsa kendisi yapar) ve commit + push olmadan işi bitmiş saymaz. Telefondan yönetmek için `telegram-mod` (AFK) ile birlikte kullanılır. Adım adım kurulum ve ilk çalıştırma: [docs/ORKESTRASYON.md](docs/ORKESTRASYON.md).
+
 ## Durum çubuğu
 
 Durum çubuğu artık kendi deposunda: [afu-claude-statusline](https://github.com/pirncedark/afu-claude-statusline).
@@ -296,6 +321,7 @@ Durum çubuğu artık kendi deposunda: [afu-claude-statusline](https://github.co
 
 ```
 skills/telegram-mod/SKILL.md          çift yönlü Telegram loop
+skills/isci-terminal/SKILL.md         koordinatör + işçi terminal kuralları
 skills/afu-ai/SKILL.md                CLI yönlendirme + doğrulama kuralları
 skills/afu-ai/scripts/omp_kanit.py    omp için kanıt-banner sarmalayıcısı
 skills/afu-ai/scripts/subajan.py      CLI ajan çalıştırıcısı + canlı durum
