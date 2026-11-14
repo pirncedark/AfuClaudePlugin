@@ -16,6 +16,8 @@ each CLI subagent uses its own login, so nothing is ever hardcoded.
 
 ## Quick install (Claude Code and Codex)
 
+> **Give this to your Claude/Codex:** paste the link to [KURULUM_CLAUDE.md](KURULUM_CLAUDE.md) and say "install this" — it contains step-by-step agent instructions (asks what you have, installs, verifies, tells you which steps need you).
+
 One command copies all skills to `~/.claude/skills` (Claude Code) and `~/.agents/skills` (Codex):
 
 ```powershell
@@ -151,7 +153,11 @@ Two Claude Code sessions: a **coordinator** (Opus) that plans, answers questions
 
 ## Status line
 
-The status bar now lives in its own repo: [afu-claude-statusline](https://github.com/pirncedark/afu-claude-statusline).
+The multi-row status bar (model, quota bars for Claude/Gemini/OpenCode/Codex, context, live agent panel) is included in `statusline/`.
+
+![Status line preview](statusline/docs/preview.png)
+
+Install: `bash statusline/install.sh` (Windows: `./statusline/install.ps1`), then restart Claude Code. Needs Python 3 and bash (Git Bash on Windows). Providers you do not use show `—`. The standalone copy also lives at [afu-claude-statusline](https://github.com/pirncedark/afu-claude-statusline).
 
 ### Live agents
 
@@ -309,7 +315,7 @@ Banner kırmızıya dönerse dur: iş ücretli bir modele düşmüş demektir.
 
 ## Durum çubuğu
 
-Durum çubuğu artık kendi deposunda: [afu-claude-statusline](https://github.com/pirncedark/afu-claude-statusline).
+Çok satırlı durum çubuğu (model, Claude/Gemini/OpenCode/Codex kota çubukları, bağlam, canlı ajan paneli) `statusline/` klasöründe. Kurulum: `bash statusline/install.sh` (Windows: `./statusline/install.ps1`), sonra Claude Code'u yeniden başlat. Python 3 ve bash (Windows'ta Git Bash) gerekir. Kullanmadığın sağlayıcı satırı `—` gösterir. Bağımsız kopyası: [afu-claude-statusline](https://github.com/pirncedark/afu-claude-statusline).
 
 ### Canlı ajanlar
 

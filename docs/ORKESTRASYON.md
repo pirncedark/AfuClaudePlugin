@@ -65,7 +65,7 @@ Koordinatöre normal konuş: *"README'ye kurulum bölümü ekle."* Koordinatör:
 - Gemini kotası bitince OpenCode ya da Codex'e düş; `zaman-asimi-zinciri` skill'i kesilen işi aynı oturumdan devam ettirir.
 
 ## 9. Durum çubuğu paneli
-Çubuk ayrı depoda: [afu-claude-statusline](https://github.com/pirncedark/afu-claude-statusline) (kota çubukları, bağlam, alt ajan paneli). Kurulum o deponun README'sinde. `afu-ai` canlı ajan durumunu `~/.claude/afu-ajanlar/` altına yazar, çubuk oradan okur.
+Çubuk bu repoda, `statusline/` klasöründe (kota çubukları, bağlam, alt ajan paneli). Kurulum: `bash statusline/install.sh` (Windows: `./statusline/install.ps1`), sonra Claude Code'u yeniden başlat. Kurulum betiği mevcut dosyaları yedekler, `settings.json`'da yalnız `statusLine` ve `subagentStatusLine` anahtarlarını yazar. Geri almak için o iki anahtarı sil. `afu-ai` canlı ajan durumunu `~/.claude/afu-ajanlar/` altına yazar, çubuk oradan okur.
 
 ## 10. Skill listesi
 | Skill | Ne işe yarar |
@@ -86,4 +86,4 @@ Koordinatöre normal konuş: *"README'ye kurulum bölümü ekle."* Koordinatör:
 
 ## 11. Arkadaşa gönderilecek mesaj
 > Claude Code + Codex/Gemini orkestrasyon kiti: https://github.com/pirncedark/AfuClaudePlugin
-> 1) Klonla, `install.ps1` (Windows) ya da `./install.sh` çalıştır. 2) `docs/ORKESTRASYON.md` dosyasını sırayla oku: iki terminal aç, birini `/rename işçi` yap. 3) Gemini için `omp` kur ve giriş yap. 4) Durum çubuğu için `afu-claude-statusline` deposunu kur. Telegram ve `.env` isteğe bağlı; kendi token'ını yaz, benimkini isteme.
+> 1) Klonla, `install.ps1` (Windows) ya da `./install.sh` çalıştır. 2) `docs/ORKESTRASYON.md` dosyasını sırayla oku: iki terminal aç, birini `/rename işçi` yap. 3) Gemini için `omp` kur ve giriş yap. 4) Durum çubuğu için `bash statusline/install.sh` çalıştır. Telegram ve `.env` isteğe bağlı; kendi token'ını yaz, benimkini isteme.
