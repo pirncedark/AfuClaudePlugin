@@ -8,6 +8,7 @@ Two Claude Code skills and a settings tool, packaged so they can be dropped into
 |---|---|
 | **telegram-mod** | A two-way Telegram loop — run Claude Code from your phone. It asks its questions in Telegram and reads your answers from there. |
 | **afu-ai** | A CLI bridge — Claude routes a task to whichever CLI model fits (omp/Gemini, opencode, codex), verifies the result, and hands back one answer. |
+| **router** | Agent router hook — type `ajan codex` / `ajan gemini` / `ajan opencode` / `ajan claude` and every following prompt goes to that agent; on a quota error it falls over to the next one. See [router/README.md](router/README.md). |
 | **bypass_ayar** | Bypass permissions mode on/off — one command so Claude Code stops asking permission for every tool. See [Bypass permissions mode](#bypass-permissions-mode). |
 
 **No credentials in this repo.** Tokens and chat ids come from a gitignored `.env`;
@@ -146,31 +147,9 @@ If the banner turns red, stop: the request fell through to a paid model.
 
 Two Claude Code sessions: a **coordinator** (Opus) that plans, answers questions and verifies, and a **worker** session named `işçi` that writes code with Codex (and calls Gemini/OpenCode). The coordinator sends each task to the worker with `SendMessage`, answers the worker's questions itself, checks the result, sends it back **once** if it is incomplete (then does it itself), and treats work as done only after commit + push. Combine with `telegram-mod` (AFK) to run it from your phone. Step-by-step setup and first run: [docs/ORKESTRASYON.md](docs/ORKESTRASYON.md).
 
-## Status line — models, quotas and live agents
+## Status line
 
-`statusline/` is the multi-line Claude Code status bar used with afu-ai:
-
-```
-MODEL    Opus 5.5        │  high │ fast off · thinking on
-NOBET    gpt-6-luna   $0 │   med │ CODEX · fast off · job <id>
-AJANLAR  2 calisiyor · 1 bitti · codex, opencode · ↓ 79.8k
-CLAUDE / OPENCODE / GEMINI / CODEX   quota bars + tokens + reset time
-Bağlam   context bar · $ spent · 5H / 7D windows
-```
-
-- **AJANLAR** reads the live status files that `afu-ai/scripts/subajan.py` writes to `~/.claude/afu-ajanlar/`.
-  Running agents plus the ones that finished in the last 5 minutes; `(1 sorunlu)` when one ended in quota/error.
-- **NOBET** comes from the AfuNobet supervisor if present (`AFUNOBET_DIR`, default `~/Desktop/afuproject/AfuNobet`); otherwise it is skipped.
-- No extra process is started on refresh; errors never break the bar.
-
-Install: copy `statusline/statusline-command.sh` and `statusline/ajan_token.sh` to `~/.claude/`, then in `~/.claude/settings.json`:
-
-```json
-"statusLine": { "type": "command", "command": "bash ~/.claude/statusline-command.sh" }
-```
-
-Test: `bash statusline/test_cubuk_ajanlar.sh`
-
+The status bar now lives in its own repo: [afu-claude-statusline](https://github.com/pirncedark/afu-claude-statusline).
 
 ### Live agents
 
@@ -194,7 +173,6 @@ scripts/tg_dinleyici.py               Telegram long-poll listener
 scripts/tg_gonder.py                  Bot API sender (HTML, photo/video/document)
 scripts/bypass_ayar.py                bypass permissions on/off/status
 .env.example                          configuration template
-statusline/                           status bar (models, quotas, live agents)
 ```
 
 ---
@@ -207,6 +185,7 @@ Herhangi bir bilgisayara taşınabilecek şekilde paketlenmiş iki Claude Code s
 |---|---|
 | **telegram-mod** | Çift yönlü Telegram loop'u — Claude Code'u telefondan yürüt. Sorularını Telegram'dan sorar, cevabını oradan okur. |
 | **afu-ai** | CLI köprüsü — Claude işi uygun CLI modeline (omp/Gemini, opencode, codex) dağıtır, sonucu doğrular, sana tek cevap verir. |
+| **router** | Ajan yönlendirici hook — `ajan codex` / `ajan gemini` / `ajan opencode` / `ajan claude` yaz, sonraki mesajlar o ajana gider; kota dolunca sıradakine geçer. Bkz. [router/README.md](router/README.md). |
 | **bypass_ayar** | Bypass (izin sormadan) modunu tek komutla açar/kapatır — Claude Code her araç için izin sormaz. Bkz. [Bypass (izin sormadan) modu](#bypass-izin-sormadan-modu). |
 
 **Bu repoda hiçbir API anahtarı yok.** Token ve chat id, git'e girmeyen `.env`
@@ -326,13 +305,9 @@ Banner kırmızıya dönerse dur: iş ücretli bir modele düşmüş demektir.
 
 İki Claude Code oturumu: planlayan, soruları cevaplayan ve doğrulayan **koordinatör** (Opus) ile Codex'le kod yazan (Gemini/OpenCode'u çağıran) `işçi` adlı **işçi** oturumu. Koordinatör her görevi `SendMessage` ile işçiye yollar, işçinin sorularını kendisi cevaplar, sonucu doğrular, eksikse **bir kez** geri yollar (yine olmazsa kendisi yapar) ve commit + push olmadan işi bitmiş saymaz. Telefondan yönetmek için `telegram-mod` (AFK) ile birlikte kullanılır. Adım adım kurulum ve ilk çalıştırma: [docs/ORKESTRASYON.md](docs/ORKESTRASYON.md).
 
-## Durum çubuğu — modeller, kotalar ve canlı ajanlar
+## Durum çubuğu
 
-`statusline/` afu-ai ile kullanılan çok satırlı Claude Code durum çubuğu.
-**AJANLAR** satırı `subajan.py`'nin `~/.claude/afu-ajanlar/` klasörüne yazdığı canlı durum dosyalarını okur:
-çalışan ajanlar ve son 5 dakikada bitenler; kota/hata ile biten varsa `(1 sorunlu)`.
-**NOBET** satırı AfuNobet gözetmeninden gelir (`AFUNOBET_DIR`, varsayılan `~/Desktop/afuproject/AfuNobet`); yoksa atlanır.
-Yenilemede ek süreç açılmaz; hata çubuğu bozmaz. Kurulum ve test için İngilizce bölüme bak.
+Durum çubuğu artık kendi deposunda: [afu-claude-statusline](https://github.com/pirncedark/afu-claude-statusline).
 
 ### Canlı ajanlar
 
