@@ -13,6 +13,19 @@ Two Claude Code skills and a settings tool, packaged so they can be dropped into
 **No credentials in this repo.** Tokens and chat ids come from a gitignored `.env`;
 each CLI subagent uses its own login, so nothing is ever hardcoded.
 
+## Quick install (Claude Code and Codex)
+
+One command copies all skills to `~/.claude/skills` (Claude Code) and `~/.agents/skills` (Codex):
+
+```powershell
+git clone https://github.com/pirncedark/AfuClaudePlugin.git; cd AfuClaudePlugin; .\install.ps1          # or: .\install.ps1 -Target codex
+```
+```bash
+git clone https://github.com/pirncedark/AfuClaudePlugin.git && cd AfuClaudePlugin && ./install.sh        # or: ./install.sh codex
+```
+
+Re-run it after `git pull` to update. Then follow [docs/ORKESTRASYON.md](docs/ORKESTRASYON.md).
+
 ## Install
 
 ```bash
